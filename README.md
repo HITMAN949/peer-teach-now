@@ -1,74 +1,143 @@
-# Welcome to your Lovable project
 
-## Project info
+# WeStudy - Peer-to-Peer Learning Platform
 
-**URL**: https://lovable.dev/projects/288a4e7b-e1ea-4ba3-b1c0-cc702a4a2209
+![WeStudy Logo](public/placeholder.svg)
 
-## How can I edit this code?
+WeStudy is a peer-to-peer learning platform that connects students with fellow students who can teach subjects they excel in. This platform facilitates knowledge sharing within educational communities, creating a collaborative learning environment.
 
-There are several ways of editing your application.
+## 🚀 Features
 
-**Use Lovable**
+- **Find Tutors**: Browse qualified tutors by subject, price, and availability
+- **Become a Tutor**: Share your knowledge and earn points by teaching subjects you excel in
+- **Subject Specialization**: Wide range of academic subjects from Mathematics to Computer Science
+- **Flexible Learning Options**: Choose between in-person and online tutoring sessions
+- **Secure Authentication**: User account system with profile management
+- **Rating System**: Find the best tutors based on student ratings and reviews
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/288a4e7b-e1ea-4ba3-b1c0-cc702a4a2209) and start prompting.
+## 💻 Technology Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Frontend Framework**: React
+- **Build Tool**: Vite
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui (built on Radix UI primitives)
+- **State Management**: React Query + React Hooks
+- **Backend**: Supabase (Authentication, Database, Storage)
+- **Routing**: React Router DOM
+- **Icons**: Lucide React
 
-**Use your preferred IDE**
+## 📋 Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js (v18.x or newer)
+- npm or alternative package manager (yarn, pnpm, bun)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🔧 Installation
 
-Follow these steps:
+1. Clone the repository
+   ```bash
+   git clone https://github.com/yourusername/westudy.git
+   cd westudy
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+2. Install dependencies
+   ```bash
+   npm install
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+3. Start the development server
+   ```bash
+   npm run dev
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+4. Open your browser and navigate to `http://localhost:8080`
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## 📁 Project Structure
+
+```
+westudy/
+├── public/             # Static assets
+├── src/
+│   ├── components/     # Reusable UI components
+│   │   └── ui/         # shadcn/ui components
+│   ├── hooks/          # Custom React hooks
+│   ├── integrations/   # Third-party service integrations (Supabase)
+│   ├── lib/            # Utility functions and shared code
+│   ├── pages/          # Page components
+│   │   └── offers/     # Teaching offer related pages
+│   ├── App.tsx         # Main application component with routing
+│   ├── index.css       # Global styles
+│   └── main.tsx        # Application entry point
+├── index.html          # HTML template
+└── package.json        # Dependencies and scripts
 ```
 
-**Edit a file directly in GitHub**
+## 🤝 How It Works
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. **Students Browse**: Search for tutors based on subjects, availability, or ratings
+2. **Request a Session**: Contact a tutor and schedule a learning session
+3. **Learn**: Meet with your tutor either online or in-person
+4. **Provide Feedback**: Rate your experience and help others find good tutors
+5. **Teach Others**: Share your knowledge by becoming a tutor yourself
 
-**Use GitHub Codespaces**
+## 🧪 Key Components
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **Teaching Offers**: Listings created by tutors advertising their teaching services
+- **Subject Categories**: Organized subject areas for easy browsing
+- **User Profiles**: Detailed information about tutors and students
+- **Points System**: Currency used within the platform to book sessions
 
-## What technologies are used for this project?
+## 📱 Responsive Design
 
-This project is built with:
+The application is fully responsive and optimized for:
+- Desktop computers
+- Tablets
+- Mobile devices
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🔒 Security
 
-## How can I deploy this project?
+- Authentication powered by Supabase
+- Protected routes for authorized users
+- Secure data storage
 
-Simply open [Lovable](https://lovable.dev/projects/288a4e7b-e1ea-4ba3-b1c0-cc702a4a2209) and click on Share -> Publish.
+## 🚀 Deployment
 
-## Can I connect a custom domain to my Lovable project?
+The project can be deployed to various hosting services:
 
-Yes it is!
+1. **Vercel/Netlify**:
+   - Connect to your GitHub repository
+   - Configure build settings: `npm run build`
+   - Set the publish directory to `dist`
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+2. **Manual Deployment**:
+   ```bash
+   npm run build
+   # Deploy the generated 'dist' folder to your hosting provider
+   ```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
-# WeStudy
+## 🛠️ Development
+
+```bash
+# Run in development mode
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👥 Contributors
+
+- [Your Name](https://github.com/yourusername)
+
+## 💡 Future Enhancements
+
+- Real-time messaging system between students and tutors
+- Calendar integration for scheduling sessions
+- Payment processing with Stripe
+- Mobile app versions for iOS and Android
