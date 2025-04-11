@@ -11,6 +11,9 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import CreateOffer from "./pages/offers/Create";
+import BrowseOffers from "./pages/offers/Browse";
+import OfferDetail from "./pages/offers/Detail";
 
 const queryClient = new QueryClient();
 
@@ -25,11 +28,14 @@ const App = () => (
             {/* Public routes */}
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/offers/browse" element={<BrowseOffers />} />
+            <Route path="/offers/:id" element={<OfferDetail />} />
             
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/offers/create" element={<CreateOffer />} />
               {/* Add other protected routes here */}
             </Route>
             
