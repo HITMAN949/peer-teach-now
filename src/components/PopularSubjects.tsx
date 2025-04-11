@@ -2,8 +2,11 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from 'react-router-dom';
 
 const PopularSubjects = () => {
+  const navigate = useNavigate();
+  
   const subjects = [
     {
       name: "Mathematics",
@@ -55,6 +58,14 @@ const PopularSubjects = () => {
     }
   ];
 
+  const handleSubjectClick = (subject: string) => {
+    navigate(`/offers/browse?search=${encodeURIComponent(subject)}`);
+  };
+
+  const handleViewAllSubjects = () => {
+    navigate('/offers/browse');
+  };
+
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
@@ -63,17 +74,21 @@ const PopularSubjects = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Popular Subjects</h2>
             <p className="text-lg text-gray-600">Find tutors for the most in-demand subjects</p>
           </div>
-          <Button variant="ghost" className="hidden md:flex items-center text-westudy-600 hover:text-westudy-700">
+          <Button 
+            variant="ghost" 
+            className="hidden md:flex items-center text-westudy-600 hover:text-westudy-700"
+            onClick={handleViewAllSubjects}
+          >
             View all subjects <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {subjects.map((subject, index) => (
-            <a 
+            <div
               key={index}
-              href="#"
-              className="block bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+              onClick={() => handleSubjectClick(subject.name)}
+              className="block bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer"
             >
               <div className="flex items-center space-x-4">
                 <div className={`w-12 h-12 rounded-full ${subject.color} flex items-center justify-center text-2xl`}>
@@ -84,12 +99,16 @@ const PopularSubjects = () => {
                   <p className="text-sm text-gray-500">{subject.teachers} teachers</p>
                 </div>
               </div>
-            </a>
+            </div>
           ))}
         </div>
 
         <div className="mt-8 text-center md:hidden">
-          <Button variant="outline" className="border-westudy-200 text-westudy-600">
+          <Button 
+            variant="outline" 
+            className="border-westudy-200 text-westudy-600"
+            onClick={handleViewAllSubjects}
+          >
             View all subjects <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>

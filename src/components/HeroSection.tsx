@@ -1,9 +1,20 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Search } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/offers/browse?search=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
   return (
     <div className="relative bg-gradient-to-br from-westudy-50 via-white to-westudy-100 py-16 md:py-24">
       <div className="container mx-auto px-4">
@@ -17,15 +28,19 @@ const HeroSection = () => {
               WeStudy connects students for peer-to-peer learning. Find the perfect tutor or share your knowledge and earn points.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-westudy-500 hover:bg-westudy-600 text-white py-6 px-8 text-lg">
-                Find a Teacher
-              </Button>
-              <Button variant="outline" className="border-westudy-300 text-westudy-700 hover:bg-westudy-50 py-6 px-8 text-lg">
-                Become a Teacher
-              </Button>
+              <Link to="/offers/browse">
+                <Button className="bg-westudy-500 hover:bg-westudy-600 text-white py-6 px-8 text-lg">
+                  Find a Teacher
+                </Button>
+              </Link>
+              <Link to="/offers/create">
+                <Button variant="outline" className="border-westudy-300 text-westudy-700 hover:bg-westudy-50 py-6 px-8 text-lg">
+                  Become a Teacher
+                </Button>
+              </Link>
             </div>
 
-            <div className="mt-12 flex items-center bg-white rounded-full shadow-md max-w-md">
+            <form onSubmit={handleSearch} className="mt-12 flex items-center bg-white rounded-full shadow-md max-w-md">
               <div className="pl-4">
                 <Search size={20} className="text-gray-400" />
               </div>
@@ -33,11 +48,16 @@ const HeroSection = () => {
                 type="text"
                 placeholder="What do you want to learn?"
                 className="w-full py-3 px-4 rounded-full focus:outline-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button className="bg-westudy-500 hover:bg-westudy-600 text-white font-medium px-6 py-3 rounded-full transition-colors">
+              <button 
+                type="submit"
+                className="bg-westudy-500 hover:bg-westudy-600 text-white font-medium px-6 py-3 rounded-full transition-colors"
+              >
                 Search
               </button>
-            </div>
+            </form>
           </div>
           <div className="order-1 md:order-2">
             <div className="relative">

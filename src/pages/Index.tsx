@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import HowItWorks from '@/components/HowItWorks';
@@ -152,12 +153,16 @@ const Index = () => {
               Join thousands of students already using WeStudy to connect, learn, and succeed.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button className="bg-white text-westudy-600 hover:bg-gray-100 text-lg py-6 px-8">
-                Find a Teacher
-              </Button>
-              <Button variant="outline" className="border-white text-white hover:bg-westudy-700 text-lg py-6 px-8">
-                Become a Teacher
-              </Button>
+              <Link to="/offers/browse">
+                <Button className="bg-white text-westudy-600 hover:bg-gray-100 text-lg py-6 px-8">
+                  Find a Teacher
+                </Button>
+              </Link>
+              <Link to="/offers/create">
+                <Button variant="outline" className="border-white text-white hover:bg-westudy-700 text-lg py-6 px-8">
+                  Become a Teacher
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

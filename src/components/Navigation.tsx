@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown, User } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
@@ -8,6 +8,13 @@ import { useAuth } from '@/hooks/use-auth';
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+    setIsMenuOpen(false);
+  };
 
   return (
     <nav className="w-full py-4 bg-white shadow-sm">
@@ -46,7 +53,7 @@ const Navigation = () => {
                   Dashboard
                 </Button>
               </Link>
-              <Button onClick={logout} variant="outline" className="border-westudy-200 text-westudy-600 hover:bg-westudy-50">Log Out</Button>
+              <Button onClick={handleLogout} variant="outline" className="border-westudy-200 text-westudy-600 hover:bg-westudy-50">Log Out</Button>
             </>
           ) : (
             <>
@@ -77,29 +84,29 @@ const Navigation = () => {
           <div className="px-2 pt-2 pb-3 space-y-1">
             <div className="pt-2 pb-4">
               <p className="px-4 text-sm font-medium text-gray-500">Find Teachers</p>
-              <Link to="/offers/browse" className="block px-4 py-2 text-base text-gray-700 hover:bg-westudy-50 hover:text-westudy-600">By Subject</Link>
-              <Link to="/offers/browse?filter=location" className="block px-4 py-2 text-base text-gray-700 hover:bg-westudy-50 hover:text-westudy-600">By Location</Link>
-              <Link to="/offers/browse?filter=availability" className="block px-4 py-2 text-base text-gray-700 hover:bg-westudy-50 hover:text-westudy-600">By Availability</Link>
+              <Link to="/offers/browse" onClick={() => setIsMenuOpen(false)} className="block px-4 py-2 text-base text-gray-700 hover:bg-westudy-50 hover:text-westudy-600">By Subject</Link>
+              <Link to="/offers/browse?filter=location" onClick={() => setIsMenuOpen(false)} className="block px-4 py-2 text-base text-gray-700 hover:bg-westudy-50 hover:text-westudy-600">By Location</Link>
+              <Link to="/offers/browse?filter=availability" onClick={() => setIsMenuOpen(false)} className="block px-4 py-2 text-base text-gray-700 hover:bg-westudy-50 hover:text-westudy-600">By Availability</Link>
             </div>
-            <Link to="/offers/create" className="block px-4 py-2 text-base text-gray-700 hover:bg-westudy-50 hover:text-westudy-600">Become a Teacher</Link>
-            <Link to="/how-it-works" className="block px-4 py-2 text-base text-gray-700 hover:bg-westudy-50 hover:text-westudy-600">How It Works</Link>
+            <Link to="/offers/create" onClick={() => setIsMenuOpen(false)} className="block px-4 py-2 text-base text-gray-700 hover:bg-westudy-50 hover:text-westudy-600">Become a Teacher</Link>
+            <Link to="/how-it-works" onClick={() => setIsMenuOpen(false)} className="block px-4 py-2 text-base text-gray-700 hover:bg-westudy-50 hover:text-westudy-600">How It Works</Link>
             <div className="pt-4 flex flex-col space-y-2 px-4">
               {user ? (
                 <>
-                  <Link to="/dashboard">
+                  <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
                     <Button variant="outline" className="w-full justify-center border-westudy-200 text-westudy-600 hover:bg-westudy-50">
                       <User size={18} className="mr-2" />
                       Dashboard
                     </Button>
                   </Link>
-                  <Button onClick={logout} variant="outline" className="w-full justify-center border-westudy-200 text-westudy-600 hover:bg-westudy-50">Log Out</Button>
+                  <Button onClick={handleLogout} variant="outline" className="w-full justify-center border-westudy-200 text-westudy-600 hover:bg-westudy-50">Log Out</Button>
                 </>
               ) : (
                 <>
-                  <Link to="/auth">
+                  <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
                     <Button variant="outline" className="w-full justify-center border-westudy-200 text-westudy-600 hover:bg-westudy-50">Log In</Button>
                   </Link>
-                  <Link to="/auth?tab=signup">
+                  <Link to="/auth?tab=signup" onClick={() => setIsMenuOpen(false)}>
                     <Button className="w-full justify-center bg-westudy-500 hover:bg-westudy-600 text-white">Sign Up</Button>
                   </Link>
                 </>
