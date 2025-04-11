@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tables } from '@/integrations/supabase/types';
+import { Tables, TablesInsert } from '@/integrations/supabase/types';
 
 const CreateOffer = () => {
   const { user } = useAuth();
@@ -55,7 +55,8 @@ const CreateOffer = () => {
     try {
       setIsSubmitting(true);
       
-      const offerData: Partial<Tables<'teaching_offers'>> = {
+      // Create a properly typed insert object for Supabase
+      const offerData: TablesInsert<'teaching_offers'> = {
         teacher_id: user.id,
         subject: formData.subject,
         description: formData.description,

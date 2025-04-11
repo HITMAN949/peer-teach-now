@@ -11,8 +11,17 @@ import { Badge } from '@/components/ui/badge';
 import { Search, Book, MapPin } from 'lucide-react';
 import { Tables } from '@/integrations/supabase/types';
 
+// Define a more flexible type that matches what Supabase returns
 type TeachingOfferWithTeacher = Tables<'teaching_offers'> & {
-  profiles: Tables<'profiles'> | null;
+  profiles: {
+    id: string;
+    full_name: string;
+    bio?: string | null;
+    school_university?: string | null;
+    points?: number;
+    created_at?: string;
+    updated_at?: string;
+  } | null;
 };
 
 const BrowseOffers = () => {
@@ -44,7 +53,8 @@ const BrowseOffers = () => {
         throw error;
       }
 
-      setOffers(data || []);
+      // Cast the data to match our expected type
+      setOffers(data as TeachingOfferWithTeacher[]);
     } catch (error: any) {
       toast({
         title: "Error loading offers",
