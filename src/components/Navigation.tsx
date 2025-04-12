@@ -29,7 +29,7 @@ const Navigation = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
           <div className="relative group">
-            <button className="flex items-center space-x-1 text-foreground hover:text-westudy-600 transition-colors">
+            <button className="flex items-center space-x-1 text-foreground hover:text-westudy-600 dark:hover:text-westudy-400 transition-colors">
               <span>Find Teachers</span>
               <ChevronDown size={16} />
             </button>
@@ -41,8 +41,8 @@ const Navigation = () => {
               </div>
             </div>
           </div>
-          <Link to="/offers/create" className="text-foreground hover:text-westudy-600 transition-colors">Become a Teacher</Link>
-          <Link to="/how-it-works" className="text-foreground hover:text-westudy-600 transition-colors">How It Works</Link>
+          <Link to="/offers/create" className="text-foreground hover:text-westudy-600 dark:hover:text-westudy-400 transition-colors">Become a Teacher</Link>
+          <Link to="/how-it-works" className="text-foreground hover:text-westudy-600 dark:hover:text-westudy-400 transition-colors">How It Works</Link>
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
@@ -63,7 +63,7 @@ const Navigation = () => {
                 <Button variant="outline" className="border-muted text-foreground hover:bg-accent">Log In</Button>
               </Link>
               <Link to="/auth?tab=signup">
-                <Button className="bg-westudy-500 hover:bg-westudy-600 text-white">Sign Up</Button>
+                <Button className="bg-westudy-500 hover:bg-westudy-600 dark:bg-westudy-600 dark:hover:bg-westudy-700 text-white">Sign Up</Button>
               </Link>
             </>
           )}
@@ -110,7 +110,7 @@ const Navigation = () => {
                     <Button variant="outline" className="w-full justify-center border-muted text-foreground hover:bg-accent">Log In</Button>
                   </Link>
                   <Link to="/auth?tab=signup" onClick={() => setIsMenuOpen(false)}>
-                    <Button className="w-full justify-center bg-westudy-500 hover:bg-westudy-600 text-white">Sign Up</Button>
+                    <Button className="w-full justify-center bg-westudy-500 hover:bg-westudy-600 dark:bg-westudy-600 dark:hover:bg-westudy-700 text-white">Sign Up</Button>
                   </Link>
                 </>
               )}

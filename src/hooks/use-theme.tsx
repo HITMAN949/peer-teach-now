@@ -6,6 +6,7 @@ type Theme = "light" | "dark";
 type ThemeContextType = {
   theme: Theme;
   toggleTheme: () => void;
+  setTheme: (theme: Theme) => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -15,13 +16,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // Get theme preference from localStorage if available
     const savedTheme = localStorage.getItem("theme") as Theme | null;
     
-    // Check system preference if no saved preference
-    if (!savedTheme) {
-      const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      return systemPreference;
+    if (savedTheme) {
+      return savedTheme;
     }
     
-    return savedTheme || "light";
+    // Check system preference
+    const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return systemPreference;
   });
   
   // Update document with current theme
@@ -32,12 +33,26 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("theme", theme);
   }, [theme]);
   
+  // Listen for system preference changes
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem("theme")) {
+        setTheme(e.matches ? "dark" : "light");
+      }
+    };
+    
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+  
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
   
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );

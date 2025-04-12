@@ -57,7 +57,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 260 100% 80%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -66,7 +66,7 @@
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 260 80% 70%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -84,6 +84,19 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Update westudy color values for dark mode */
+    --westudy-50: 260 100% 97%;
+    --westudy-100: 260 100% 95%;
+    --westudy-200: 260 95% 90%;
+    --westudy-300: 260 90% 85%;
+    --westudy-400: 260 85% 80%;
+    --westudy-500: 260 80% 75%;
+    --westudy-600: 260 75% 70%;
+    --westudy-700: 260 70% 65%;
+    --westudy-800: 260 65% 60%;
+    --westudy-900: 260 60% 55%;
+    --westudy-950: 260 55% 50%;
   }
 }
 
@@ -100,6 +113,23 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
+  
+  /* Dark mode adjustments for hero section */
+  .dark .bg-gradient-to-br.from-westudy-50.via-white.to-westudy-100 {
+    @apply from-gray-900 via-gray-800 to-gray-900;
+  }
+  
+  .dark .text-gray-900 {
+    @apply text-gray-100;
+  }
+  
+  .dark .text-gray-600 {
+    @apply text-gray-300;
+  }
+  
+  .dark .bg-gray-50 {
+    @apply bg-gray-900;
+  }
 }
 
 @layer components {
@@ -109,9 +139,19 @@
   
   .btn-secondary {
     @apply bg-white hover:bg-gray-100 text-westudy-600 border border-westudy-200 font-semibold py-2 px-4 rounded-md transition-colors;
+    @apply dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-westudy-300 dark:border-gray-700;
   }
 
   .card-hover {
     @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  /* Dark mode specific components */
+  .dark .search-bar {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .feature-card {
+    @apply bg-gray-800 border-gray-700;
   }
 }
