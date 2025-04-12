@@ -1,173 +1,183 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
-import HowItWorks from '@/components/HowItWorks';
+import Footer from '@/components/Footer';
 import PopularSubjects from '@/components/PopularSubjects';
+import HowItWorks from '@/components/HowItWorks';
 import FeatureCard from '@/components/FeatureCard';
 import TestimonialCard from '@/components/TestimonialCard';
-import Footer from '@/components/Footer';
-import { BookOpen, Clock, DollarSign, Users } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { useTheme } from '@/hooks/use-theme';
+import AdminControls from '@/components/AdminControls';
 
 const Index = () => {
-  const features = [
-    {
-      icon: BookOpen,
-      title: "Learn From Peers",
-      description: "Get help from students who excel at the subjects you're struggling with.",
-      color: "bg-westudy-500"
-    },
-    {
-      icon: Clock,
-      title: "Flexible Scheduling",
-      description: "Book sessions when it's convenient for you - evenings, weekends, or between classes.",
-      color: "bg-westudy-green-500"
-    },
-    {
-      icon: DollarSign,
-      title: "Affordable Points System",
-      description: "Pay with points and earn them back by teaching others what you know.",
-      color: "bg-westudy-blue-500"
-    },
-    {
-      icon: Users,
-      title: "Verified Community",
-      description: "Connect with students from your school or universities worldwide.",
-      color: "bg-purple-500"
-    }
-  ];
-
-  const testimonials = [
-    {
-      quote: "WeStudy helped me ace my Calculus final. My tutor explained concepts way better than my professor!",
-      name: "Alex Johnson",
-      role: "Computer Science Student",
-      avatarUrl: "https://randomuser.me/api/portraits/men/32.jpg",
-      rating: 5
-    },
-    {
-      quote: "I started teaching Spanish on WeStudy and not only earned points, but also improved my own language skills.",
-      name: "Maria Garcia",
-      role: "Languages Student",
-      avatarUrl: "https://randomuser.me/api/portraits/women/44.jpg",
-      rating: 5
-    },
-    {
-      quote: "Finding study partners was always difficult until I discovered WeStudy. Now I have a whole network!",
-      name: "James Wilson",
-      role: "Biology Student",
-      avatarUrl: "https://randomuser.me/api/portraits/men/62.jpg",
-      rating: 4
-    }
-  ];
+  const { theme } = useTheme();
+  
+  // Update document title
+  useEffect(() => {
+    document.title = 'WeStudy - Peer-to-Peer Learning Platform';
+  }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col antialiased transition-colors duration-300">
       <Navigation />
-      <HeroSection />
-
-      {/* Features Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose WeStudy?</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Our platform offers unique advantages for students who want to learn and earn
-            </p>
+      
+      <main className="flex-grow">
+        <HeroSection />
+        
+        {/* How It Works Section */}
+        <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 transition-colors">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">How WeStudy Works</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300">Our platform makes it easy to connect with peers for learning</p>
+            </div>
+            <HowItWorks />
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <FeatureCard
-                key={index}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-                color={feature.color}
+        </section>
+        
+        {/* Popular Subjects */}
+        <section className="py-16 md:py-24 transition-colors">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">Popular Subjects</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300">Browse our most sought-after learning categories</p>
+            </div>
+            <PopularSubjects />
+          </div>
+        </section>
+        
+        {/* Features Section */}
+        <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 transition-colors">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">Why Choose WeStudy</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300">Discover the benefits of our peer-to-peer learning platform</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <FeatureCard 
+                title="Learn from Peers" 
+                description="Connect with students who have mastered the subjects you want to learn."
+                icon="Users"
               />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <HowItWorks />
-      <PopularSubjects />
-
-      {/* Stats Section */}
-      <section className="py-16 bg-westudy-600 text-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">10k+</p>
-              <p className="text-lg">Students</p>
-            </div>
-            <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">2.5k+</p>
-              <p className="text-lg">Teachers</p>
-            </div>
-            <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">25k+</p>
-              <p className="text-lg">Sessions</p>
-            </div>
-            <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">4.8</p>
-              <p className="text-lg">Avg. Rating</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Students Say</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Don't just take our word for it - hear from students who have used WeStudy
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard
-                key={index}
-                quote={testimonial.quote}
-                name={testimonial.name}
-                role={testimonial.role}
-                avatarUrl={testimonial.avatarUrl}
-                rating={testimonial.rating}
+              <FeatureCard 
+                title="Earn While Teaching" 
+                description="Share your knowledge and earn points that you can use for your own learning."
+                icon="GraduationCap"
               />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="bg-gradient-to-r from-westudy-500 to-westudy-600 rounded-2xl p-8 md:p-12 shadow-lg text-white text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start Learning?</h2>
-            <p className="text-lg mb-8 max-w-2xl mx-auto">
-              Join thousands of students already using WeStudy to connect, learn, and succeed.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link to="/offers/browse">
-                <Button className="bg-white text-westudy-600 hover:bg-gray-100 text-lg py-6 px-8">
-                  Find a Teacher
-                </Button>
-              </Link>
-              <Link to="/offers/create">
-                <Button variant="outline" className="border-white text-white hover:bg-westudy-700 text-lg py-6 px-8">
-                  Become a Teacher
-                </Button>
-              </Link>
+              <FeatureCard 
+                title="Flexible Scheduling" 
+                description="Set your own availability and learn at times that work for you."
+                icon="Calendar"
+              />
+              <FeatureCard 
+                title="Verified Profiles" 
+                description="We verify all teachers to ensure quality learning experiences."
+                icon="Shield"
+              />
+              <FeatureCard 
+                title="Secure Payments" 
+                description="Our points system makes transactions simple and secure."
+                icon="Lock"
+              />
+              <FeatureCard 
+                title="Personalized Learning" 
+                description="Find teachers who match your learning style and pace."
+                icon="Target"
+              />
             </div>
           </div>
-        </div>
-      </section>
-
+        </section>
+        
+        {/* Testimonials */}
+        <section className="py-16 md:py-24 transition-colors">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-gray-100">Student Stories</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300">Hear what our community has to say about WeStudy</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <TestimonialCard 
+                quote="I was struggling with calculus until I found a peer tutor on WeStudy. Now I'm acing my exams!"
+                name="Mia Chen"
+                role="Computer Science Student"
+                avatarUrl="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80"
+                rating={5}
+              />
+              <TestimonialCard 
+                quote="Teaching on WeStudy has been amazing. I've helped fellow students while earning points for my own learning needs."
+                name="James Wilson"
+                role="Physics Major"
+                avatarUrl="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80"
+                rating={4}
+              />
+              <TestimonialCard 
+                quote="The flexibility of scheduling sessions around my busy timetable has been a game changer for my studies."
+                name="Sophia Rodriguez"
+                role="Pre-Med Student"
+                avatarUrl="https://images.unsplash.com/photo-1619895862022-09114b41f16f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80"
+                rating={5}
+              />
+            </div>
+          </div>
+        </section>
+        
+        {/* Stats */}
+        <section className="py-16 md:py-20 bg-gray-100 dark:bg-gray-800 transition-colors">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div>
+                <h3 className="text-4xl md:text-5xl font-bold text-westudy-600 dark:text-westudy-400 mb-2">5,000+</h3>
+                <p className="text-gray-600 dark:text-gray-300 font-medium">Active Students</p>
+              </div>
+              <div>
+                <h3 className="text-4xl md:text-5xl font-bold text-westudy-600 dark:text-westudy-400 mb-2">1,200+</h3>
+                <p className="text-gray-600 dark:text-gray-300 font-medium">Peer Teachers</p>
+              </div>
+              <div>
+                <h3 className="text-4xl md:text-5xl font-bold text-westudy-600 dark:text-westudy-400 mb-2">25,000+</h3>
+                <p className="text-gray-600 dark:text-gray-300 font-medium">Sessions Completed</p>
+              </div>
+              <div>
+                <h3 className="text-4xl md:text-5xl font-bold text-westudy-600 dark:text-westudy-400 mb-2">15+</h3>
+                <p className="text-gray-600 dark:text-gray-300 font-medium">Subject Categories</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* CTA Section */}
+        <section className="py-16 md:py-24 bg-westudy-50 dark:bg-gray-900 transition-colors">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100">Ready to Transform Your Learning Experience?</h2>
+              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">Join our community of students teaching and learning from each other.</p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/auth?tab=signup">
+                  <Button className="text-lg py-6 px-8 bg-westudy-500 hover:bg-westudy-600 dark:bg-westudy-600 dark:hover:bg-westudy-700">
+                    Sign Up Now
+                  </Button>
+                </Link>
+                <Link to="/how-it-works">
+                  <Button variant="outline" className="text-lg py-6 px-8 border-westudy-300 text-westudy-700 dark:border-westudy-700 dark:text-westudy-300">
+                    Learn More
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Admin Controls (only visible in development) */}
+        {process.env.NODE_ENV !== 'production' && (
+          <AdminControls />
+        )}
+      </main>
+      
       <Footer />
     </div>
   );

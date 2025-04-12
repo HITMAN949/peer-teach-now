@@ -28,8 +28,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Update document with current theme
   useEffect(() => {
     const root = window.document.documentElement;
+    
+    // Add a transition class for smooth theme changes
+    root.classList.add('transition-colors', 'duration-300');
+    
+    // Remove existing theme classes and add the new one
     root.classList.remove("light", "dark");
     root.classList.add(theme);
+    
+    // Store the preference in localStorage
     localStorage.setItem("theme", theme);
   }, [theme]);
   

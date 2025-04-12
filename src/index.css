@@ -130,6 +130,45 @@
   .dark .bg-gray-50 {
     @apply bg-gray-900;
   }
+  
+  /* Testimonial card dark mode */
+  .dark .bg-white.rounded-xl {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .text-gray-700 {
+    @apply text-gray-300;
+  }
+  
+  /* Stats section dark mode */
+  .dark .bg-gray-100 {
+    @apply bg-gray-800;
+  }
+  
+  /* CTA section dark mode */
+  .dark .bg-westudy-50 {
+    @apply bg-gray-900;
+  }
+  
+  /* Footer dark mode */
+  .dark .bg-gray-50 {
+    @apply bg-gray-900;
+  }
+  
+  /* Form inputs dark mode */
+  .dark input, .dark textarea, .dark select {
+    @apply bg-gray-800 border-gray-700 text-gray-200;
+  }
+  
+  /* Card dark mode */
+  .dark .shadow-md, .dark .shadow-lg, .dark .shadow-xl {
+    @apply shadow-black/20;
+  }
+  
+  /* Transition for smooth theme switching */
+  .transition-theme {
+    @apply transition-colors duration-300;
+  }
 }
 
 @layer components {
@@ -153,5 +192,14 @@
   
   .dark .feature-card {
     @apply bg-gray-800 border-gray-700;
+  }
+  
+  /* Avatar placeholders */
+  .avatar-placeholder {
+    @apply flex items-center justify-center rounded-full bg-westudy-400 text-white;
+  }
+  
+  .dark .avatar-placeholder {
+    @apply bg-westudy-800;
   }
 }
