@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import Footer from '@/components/Footer';
@@ -11,9 +11,12 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
 import AdminControls from '@/components/AdminControls';
+import { useAuth } from '@/hooks/use-auth';
 
 const Index = () => {
   const { theme } = useTheme();
+  const { user } = useAuth();
+  const [showAdminControls, setShowAdminControls] = useState(false);
   
   // Update document title
   useEffect(() => {
@@ -26,6 +29,17 @@ const Index = () => {
       
       <main className="flex-grow">
         <HeroSection />
+        
+        {/* Database Seeding - Always visible in development */}
+        {process.env.NODE_ENV !== 'production' && (
+          <section className="py-8 bg-red-50 dark:bg-red-900/20 border-y border-red-200 dark:border-red-800/30">
+            <div className="container mx-auto px-4 text-center">
+              <h3 className="text-xl font-semibold mb-2 text-red-700 dark:text-red-400">Developer Tools</h3>
+              <p className="mb-4 text-red-600 dark:text-red-300">Click the button below to load test data into the database.</p>
+              <AdminControls />
+            </div>
+          </section>
+        )}
         
         {/* How It Works Section */}
         <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 transition-colors">
@@ -156,31 +170,28 @@ const Index = () => {
           </div>
         </section>
         
-        {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-westudy-50 dark:bg-gray-900 transition-colors">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100">Ready to Transform Your Learning Experience?</h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">Join our community of students teaching and learning from each other.</p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/auth?tab=signup">
-                  <Button className="text-lg py-6 px-8 bg-westudy-500 hover:bg-westudy-600 dark:bg-westudy-600 dark:hover:bg-westudy-700">
-                    Sign Up Now
-                  </Button>
-                </Link>
-                <Link to="/how-it-works">
-                  <Button variant="outline" className="text-lg py-6 px-8 border-westudy-300 text-westudy-700 dark:border-westudy-700 dark:text-westudy-300">
-                    Learn More
-                  </Button>
-                </Link>
+        {/* CTA Section - Only show if not logged in */}
+        {!user && (
+          <section className="py-16 md:py-24 bg-westudy-50 dark:bg-gray-900 transition-colors">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100">Ready to Transform Your Learning Experience?</h2>
+                <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">Join our community of students teaching and learning from each other.</p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/auth?tab=signup">
+                    <Button className="text-lg py-6 px-8 bg-westudy-500 hover:bg-westudy-600 dark:bg-westudy-600 dark:hover:bg-westudy-700">
+                      Sign Up Now
+                    </Button>
+                  </Link>
+                  <Link to="/how-it-works">
+                    <Button variant="outline" className="text-lg py-6 px-8 border-westudy-300 text-westudy-700 dark:border-westudy-700 dark:text-westudy-300">
+                      Learn More
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-        
-        {/* Admin Controls (only visible in development) */}
-        {process.env.NODE_ENV !== 'production' && (
-          <AdminControls />
+          </section>
         )}
       </main>
       
