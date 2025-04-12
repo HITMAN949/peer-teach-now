@@ -62,31 +62,37 @@ const Index = () => {
                 title="Learn from Peers" 
                 description="Connect with students who have mastered the subjects you want to learn."
                 icon="Users"
+                color="bg-westudy-500 dark:bg-westudy-600"
               />
               <FeatureCard 
                 title="Earn While Teaching" 
                 description="Share your knowledge and earn points that you can use for your own learning."
                 icon="GraduationCap"
+                color="bg-westudy-blue-500 dark:bg-westudy-blue-600"
               />
               <FeatureCard 
                 title="Flexible Scheduling" 
                 description="Set your own availability and learn at times that work for you."
                 icon="Calendar"
+                color="bg-westudy-green-500 dark:bg-westudy-green-600"
               />
               <FeatureCard 
                 title="Verified Profiles" 
                 description="We verify all teachers to ensure quality learning experiences."
                 icon="Shield"
+                color="bg-westudy-purple-500 dark:bg-westudy-purple-600"
               />
               <FeatureCard 
                 title="Secure Payments" 
                 description="Our points system makes transactions simple and secure."
                 icon="Lock"
+                color="bg-westudy-yellow-500 dark:bg-westudy-yellow-600"
               />
               <FeatureCard 
                 title="Personalized Learning" 
                 description="Find teachers who match your learning style and pace."
                 icon="Target"
+                color="bg-westudy-red-500 dark:bg-westudy-red-600"
               />
             </div>
           </div>
