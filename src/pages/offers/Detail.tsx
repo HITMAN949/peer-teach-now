@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Calendar, MapPin, Clock, User, Book, ArrowLeft } from 'lucide-react';
+import { AvailabilitySlots } from '@/components/AvailabilitySlots';
 
 type TeachingOffer = {
   id: string;
@@ -163,23 +164,7 @@ const OfferDetail = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center justify-center py-12 text-gray-500">
-                  <Calendar className="h-12 w-12 mr-4 opacity-50" />
-                  <div className="text-center">
-                    <p className="mb-2">No time slots available yet</p>
-                    {isCurrentUserTeacher && (
-                      <Button 
-                        variant="outline" 
-                        onClick={() => toast({
-                          title: "Feature coming soon",
-                          description: "The ability to add availability is coming in a future update.",
-                        })}
-                      >
-                        Add Availability
-                      </Button>
-                    )}
-                  </div>
-                </div>
+                {id && <AvailabilitySlots offerId={id} isCurrentUserTeacher={isCurrentUserTeacher} />}
               </CardContent>
             </Card>
           </div>
