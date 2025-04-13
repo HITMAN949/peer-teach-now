@@ -170,7 +170,10 @@ const OfferDetail = () => {
                     {isCurrentUserTeacher && (
                       <Button 
                         variant="outline" 
-                        onClick={() => navigate(`/offers/${id}/schedule`)}
+                        onClick={() => toast({
+                          title: "Feature coming soon",
+                          description: "The ability to add availability is coming in a future update.",
+                        })}
                       >
                         Add Availability
                       </Button>

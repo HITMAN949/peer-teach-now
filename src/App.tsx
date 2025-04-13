@@ -40,7 +40,6 @@ const App = () => (
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/offers/create" element={<CreateOffer />} />
-                {/* Add other protected routes here */}
               </Route>
               
               {/* Catch-all route */}

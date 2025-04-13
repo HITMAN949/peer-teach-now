@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import Navigation from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
@@ -10,13 +9,11 @@ import TestimonialCard from '@/components/TestimonialCard';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@/hooks/use-theme';
-import AdminControls from '@/components/AdminControls';
 import { useAuth } from '@/hooks/use-auth';
 
 const Index = () => {
   const { theme } = useTheme();
   const { user } = useAuth();
-  const [showAdminControls, setShowAdminControls] = useState(false);
   
   // Update document title
   useEffect(() => {
@@ -29,17 +26,6 @@ const Index = () => {
       
       <main className="flex-grow">
         <HeroSection />
-        
-        {/* Database Seeding - Always visible in development */}
-        {process.env.NODE_ENV !== 'production' && (
-          <section className="py-8 bg-red-50 dark:bg-red-900/20 border-y border-red-200 dark:border-red-800/30">
-            <div className="container mx-auto px-4 text-center">
-              <h3 className="text-xl font-semibold mb-2 text-red-700 dark:text-red-400">Developer Tools</h3>
-              <p className="mb-4 text-red-600 dark:text-red-300">Click the button below to load test data into the database.</p>
-              <AdminControls />
-            </div>
-          </section>
-        )}
         
         {/* How It Works Section */}
         <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 transition-colors">
