@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,6 +15,7 @@ import CreateOffer from "./pages/offers/Create";
 import BrowseOffers from "./pages/offers/Browse";
 import OfferDetail from "./pages/offers/Detail";
 import HowItWorks from "./pages/HowItWorks";
+import Messages from "./pages/Messages";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +40,7 @@ const App = () => (
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/offers/create" element={<CreateOffer />} />
+                <Route path="/messages" element={<Messages />} />
               </Route>
               
               {/* Catch-all route */}
