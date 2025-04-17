@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, User } from 'lucide-react';
+import { Menu, X, ChevronDown, User, MessageCircle } from 'lucide-react';
 import { useAuth } from '@/hooks/use-auth';
 import { ThemeToggle } from './ThemeToggle';
 
@@ -49,6 +49,10 @@ const Navigation = () => {
           <ThemeToggle />
           {user ? (
             <>
+              <Link to="/messages" className="text-foreground hover:text-westudy-600 dark:hover:text-westudy-400 transition-colors flex items-center">
+                <MessageCircle size={18} className="mr-1" />
+                Messages
+              </Link>
               <Link to="/dashboard">
                 <Button variant="outline" className="border-muted text-foreground hover:bg-accent">
                   <User size={18} className="mr-2" />
@@ -93,6 +97,12 @@ const Navigation = () => {
             </div>
             <Link to="/offers/create" onClick={() => setIsMenuOpen(false)} className="block px-4 py-2 text-base text-foreground hover:bg-accent hover:text-accent-foreground">Become a Teacher</Link>
             <Link to="/how-it-works" onClick={() => setIsMenuOpen(false)} className="block px-4 py-2 text-base text-foreground hover:bg-accent hover:text-accent-foreground">How It Works</Link>
+            {user && (
+              <Link to="/messages" onClick={() => setIsMenuOpen(false)} className="block px-4 py-2 text-base text-foreground hover:bg-accent hover:text-accent-foreground flex items-center">
+                <MessageCircle size={18} className="mr-2" />
+                Messages
+              </Link>
+            )}
             <div className="pt-4 flex flex-col space-y-2 px-4">
               {user ? (
                 <>
