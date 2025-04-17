@@ -34,7 +34,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ revieweeId }) => {
             rating, 
             comment, 
             created_at,
-            reviewer:profiles!inner(full_name)
+            reviewer:profiles!reviews_reviewer_id_fkey(full_name)
           `)
           .eq('reviewee_id', revieweeId)
           .order('created_at', { ascending: false });
