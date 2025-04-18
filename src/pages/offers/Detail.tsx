@@ -10,6 +10,7 @@ import { AvailabilitySlots } from '@/components/AvailabilitySlots';
 import { TeacherCard } from '@/components/offers/TeacherCard';
 import { OfferDetailsCard } from '@/components/offers/OfferDetailsCard';
 import OfferBookingCard from '@/components/offers/OfferBookingCard';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import type { TeachingOffer } from '@/types/teaching';
 
 const OfferDetail = () => {
