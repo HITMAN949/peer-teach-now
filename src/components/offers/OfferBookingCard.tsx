@@ -52,7 +52,7 @@ const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot,
           time_slot_id: selectedTimeSlot.id,
           points_amount: totalPoints,
           platform_fee: platformFee,
-          status: 'pending' // Changed from 'booked' to 'pending' to match valid enum values
+          status: 'requested' // Changed to 'requested' which should be a valid enum value in the database
         })
         .select()
         .single();
@@ -78,6 +78,7 @@ const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot,
       navigate('/dashboard');
       
     } catch (error: any) {
+      console.error("Booking error:", error);
       toast({
         title: "Booking Failed",
         description: error.message || "Failed to book session. Please try again.",
