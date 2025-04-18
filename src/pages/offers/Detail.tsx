@@ -20,6 +20,11 @@ const OfferDetail = () => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [offer, setOffer] = useState<TeachingOffer | null>(null);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<{
+    id: string;
+    startTime: Date;
+    endTime: Date;
+  } | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -95,7 +100,14 @@ const OfferDetail = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {id && <AvailabilitySlots offerId={id} isCurrentUserTeacher={isCurrentUserTeacher} />}
+                {id && (
+                  <AvailabilitySlots 
+                    offerId={id} 
+                    isCurrentUserTeacher={isCurrentUserTeacher}
+                    onSelectTimeSlot={setSelectedTimeSlot}
+                    selectedTimeSlotId={selectedTimeSlot?.id}
+                  />
+                )}
               </CardContent>
             </Card>
           </div>
@@ -108,7 +120,15 @@ const OfferDetail = () => {
               schoolUniversity={offer.teacher.school_university}
             />
 
-            {!isCurrentUserTeacher && <OfferBookingCard />}
+            {!isCurrentUserTeacher && (
+              <OfferBookingCard 
+                offerId={offer.id}
+                teacherId={offer.teacher.id}
+                pointsPerHour={offer.points_per_hour}
+                selectedTimeSlot={selectedTimeSlot}
+                onResetSelection={() => setSelectedTimeSlot(null)}
+              />
+            )}
           </div>
         </div>
       ) : (

@@ -18,9 +18,16 @@ interface TimeSlot {
 interface AvailabilitySlotsProps {
   offerId: string;
   isCurrentUserTeacher: boolean;
+  onSelectTimeSlot?: (slot: { id: string; startTime: Date; endTime: Date } | null) => void;
+  selectedTimeSlotId?: string | null;
 }
 
-export function AvailabilitySlots({ offerId, isCurrentUserTeacher }: AvailabilitySlotsProps) {
+export function AvailabilitySlots({ 
+  offerId, 
+  isCurrentUserTeacher, 
+  onSelectTimeSlot,
+  selectedTimeSlotId 
+}: AvailabilitySlotsProps) {
   const { toast } = useToast();
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,6 +72,24 @@ export function AvailabilitySlots({ offerId, isCurrentUserTeacher }: Availabilit
     };
   };
 
+  const handleSlotClick = (slot: TimeSlot) => {
+    if (slot.is_booked || isCurrentUserTeacher) return;
+    
+    if (onSelectTimeSlot) {
+      if (selectedTimeSlotId === slot.id) {
+        // Deselect if already selected
+        onSelectTimeSlot(null);
+      } else {
+        // Select this slot
+        onSelectTimeSlot({
+          id: slot.id,
+          startTime: new Date(slot.start_time),
+          endTime: new Date(slot.end_time)
+        });
+      }
+    }
+  };
+
   const groupedSlots = timeSlots.reduce<Record<string, TimeSlot[]>>((acc, slot) => {
     const { date } = formatTimeSlot(slot);
     if (!acc[date]) {
@@ -103,19 +128,28 @@ export function AvailabilitySlots({ offerId, isCurrentUserTeacher }: Availabilit
                     <div className="grid gap-2">
                       {slots.map((slot) => {
                         const { time } = formatTimeSlot(slot);
+                        const isSelected = selectedTimeSlotId === slot.id;
+                        
                         return (
                           <div 
                             key={slot.id}
-                            className={`flex items-center p-2 rounded-md ${
+                            onClick={() => handleSlotClick(slot)}
+                            className={`flex items-center p-2 rounded-md cursor-pointer transition-colors ${
                               slot.is_booked 
-                                ? "bg-gray-100 text-gray-500" 
-                                : "bg-green-50 text-green-700"
+                                ? "bg-gray-100 text-gray-500 cursor-not-allowed" 
+                                : isSelected
+                                ? "bg-green-100 text-green-800 border border-green-500"
+                                : "bg-green-50 text-green-700 hover:bg-green-100"
                             }`}
                           >
                             <Clock className="h-4 w-4 mr-2" />
                             <span>{time}</span>
                             <span className="ml-auto text-sm font-medium">
-                              {slot.is_booked ? "Booked" : "Available"}
+                              {slot.is_booked 
+                                ? "Booked" 
+                                : isSelected 
+                                  ? "Selected" 
+                                  : "Available"}
                             </span>
                           </div>
                         );
