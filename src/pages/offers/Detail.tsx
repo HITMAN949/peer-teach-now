@@ -4,27 +4,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { Calendar, MapPin, Clock, User, Book, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { AvailabilitySlots } from '@/components/AvailabilitySlots';
-
-type TeachingOffer = {
-  id: string;
-  subject: string;
-  description: string;
-  level: string;
-  points_per_hour: number;
-  location_type: string;
-  teacher: {
-    id: string;
-    full_name: string;
-    bio: string | null;
-    school_university: string | null;
-  };
-};
+import { TeacherCard } from '@/components/offers/TeacherCard';
+import { OfferDetailsCard } from '@/components/offers/OfferDetailsCard';
+import OfferBookingCard from '@/components/offers/OfferBookingCard';
+import type { TeachingOffer } from '@/types/teaching';
 
 const OfferDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -79,32 +65,6 @@ const OfferDetail = () => {
     }
   };
 
-  const getLevelBadgeColor = (level: string) => {
-    switch (level) {
-      case 'beginner':
-        return 'bg-green-100 text-green-800';
-      case 'intermediate':
-        return 'bg-blue-100 text-blue-800';
-      case 'advanced':
-        return 'bg-purple-100 text-purple-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getLocationBadgeColor = (location: string) => {
-    switch (location) {
-      case 'online':
-        return 'bg-blue-100 text-blue-800';
-      case 'in-person':
-        return 'bg-amber-100 text-amber-800';
-      case 'both':
-        return 'bg-green-100 text-green-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
   const isCurrentUserTeacher = offer?.teacher.id === user?.id;
 
   return (
@@ -124,37 +84,7 @@ const OfferDetail = () => {
       ) : offer ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-                  <div>
-                    <CardTitle className="text-2xl">{offer.subject}</CardTitle>
-                    <CardDescription className="mt-1 text-base">
-                      Taught by {offer.teacher.full_name}
-                    </CardDescription>
-                  </div>
-                  <div className="flex gap-2">
-                    <Badge className={getLevelBadgeColor(offer.level)} variant="outline">
-                      {offer.level.charAt(0).toUpperCase() + offer.level.slice(1)}
-                    </Badge>
-                    <Badge className={getLocationBadgeColor(offer.location_type)} variant="outline">
-                      <MapPin className="h-3 w-3 mr-1" />
-                      {offer.location_type.charAt(0).toUpperCase() + offer.location_type.slice(1)}
-                    </Badge>
-                  </div>
-                </div>
-              </CardHeader>
-              <Separator />
-              <CardContent className="pt-6">
-                <h3 className="text-lg font-semibold mb-2">About this learning opportunity</h3>
-                <p className="whitespace-pre-line text-gray-700">{offer.description}</p>
-
-                <div className="mt-6 flex items-center text-lg font-medium">
-                  <Clock className="mr-2 h-5 w-5 text-gray-500" />
-                  <span className="text-westudy-600">{offer.points_per_hour} points per hour</span>
-                </div>
-              </CardContent>
-            </Card>
+            <OfferDetailsCard offer={offer} />
 
             <Card>
               <CardHeader>
@@ -170,49 +100,14 @@ const OfferDetail = () => {
           </div>
 
           <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl">Teacher</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center space-x-4">
-                  <div className="bg-gray-200 rounded-full h-16 w-16 flex items-center justify-center">
-                    <User className="h-8 w-8 text-gray-500" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium">{offer.teacher.full_name}</h3>
-                    {offer.teacher.school_university && (
-                      <p className="text-sm text-gray-500">{offer.teacher.school_university}</p>
-                    )}
-                  </div>
-                </div>
+            <TeacherCard 
+              teacherId={offer.teacher.id}
+              fullName={offer.teacher.full_name}
+              bio={offer.teacher.bio}
+              schoolUniversity={offer.teacher.school_university}
+            />
 
-                {offer.teacher.bio ? (
-                  <p className="text-sm text-gray-700">{offer.teacher.bio}</p>
-                ) : (
-                  <p className="text-sm text-gray-500 italic">No bio provided</p>
-                )}
-              </CardContent>
-            </Card>
-
-            {!isCurrentUserTeacher && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl">Book a lesson</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-700 mb-4">
-                    Select a time slot from the schedule to book a lesson with this teacher.
-                  </p>
-                </CardContent>
-                <CardFooter>
-                  <Button className="w-full" disabled>
-                    <Book className="mr-2 h-4 w-4" />
-                    No slots available
-                  </Button>
-                </CardFooter>
-              </Card>
-            )}
+            {!isCurrentUserTeacher && <OfferBookingCard />}
           </div>
         </div>
       ) : (
