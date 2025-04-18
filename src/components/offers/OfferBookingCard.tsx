@@ -52,7 +52,7 @@ const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot,
           time_slot_id: selectedTimeSlot.id,
           points_amount: totalPoints,
           platform_fee: platformFee,
-          status: 'booked'
+          status: 'pending' // Changed from 'booked' to 'pending' to match valid enum values
         })
         .select()
         .single();
