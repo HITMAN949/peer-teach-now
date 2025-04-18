@@ -20,6 +20,9 @@ interface OfferBookingCardProps {
   onResetSelection: () => void;
 }
 
+// Define valid session status values based on the database constraint
+type SessionStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled' | 'scheduled';
+
 const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot, onResetSelection }: OfferBookingCardProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -42,7 +45,9 @@ const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot,
       const totalPoints = Math.round(pointsPerHour * durationHours);
       const platformFee = Math.round(totalPoints * 0.1); // 10% platform fee
       
-      // First create the session
+      console.log("Creating session with status: pending");
+      
+      // First create the session - use 'pending' which is a common valid status value
       const { data: sessionData, error: sessionError } = await supabase
         .from('sessions')
         .insert({
@@ -52,7 +57,7 @@ const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot,
           time_slot_id: selectedTimeSlot.id,
           points_amount: totalPoints,
           platform_fee: platformFee,
-          status: 'requested' // Changed to 'requested' which should be a valid enum value in the database
+          status: 'pending' // Using 'pending' as it's likely a valid status in the database
         })
         .select()
         .single();
