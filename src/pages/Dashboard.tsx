@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/use-auth';
@@ -6,9 +5,11 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tables } from '@/integrations/supabase/types';
-import { BookOpen, Book, Plus, Pencil } from 'lucide-react';
+import { Book, Plus, Pencil } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Navigation from '@/components/Navigation';
+import NotificationsCard from '@/components/NotificationsCard';
+import SessionCard from '@/components/SessionCard';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -16,6 +17,7 @@ const Dashboard = () => {
   const [profile, setProfile] = useState<Tables<'profiles'> | null>(null);
   const [teachingOffers, setTeachingOffers] = useState<Tables<'teaching_offers'>[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sessions, setSessions] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +58,28 @@ const Dashboard = () => {
       }
     };
 
+    const fetchSessions = async () => {
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('sessions')
+        .select(`
+          *,
+          time_slot:time_slots(*),
+          offer:teaching_offers(*),
+          teacher:profiles!sessions_teacher_id_fkey(*),
+          student:profiles!sessions_student_id_fkey(*)
+        `)
+        .or(`teacher_id.eq.${user.id},student_id.eq.${user.id}`)
+        .order('created_at', { ascending: false });
+
+      if (!error && data) {
+        setSessions(data);
+      }
+    };
+
     fetchData();
+    fetchSessions();
   }, [user]);
 
   if (isLoading) {
@@ -74,6 +97,10 @@ const Dashboard = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Dashboard</h1>
           <Button onClick={logout}>Logout</Button>
+        </div>
+
+        <div className="mb-8">
+          <NotificationsCard />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -204,6 +231,44 @@ const Dashboard = () => {
               </div>
             </CardContent>
           </Card>
+
+          <div className="md:col-span-3">
+            <h2 className="text-2xl font-bold mb-4">Your Sessions</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {sessions.map((session) => (
+                <SessionCard
+                  key={session.id}
+                  session={session}
+                  isTeacher={session.teacher_id === user?.id}
+                  onStatusUpdate={() => {
+                    const fetchSessions = async () => {
+                      const { data, error } = await supabase
+                        .from('sessions')
+                        .select(`
+                          *,
+                          time_slot:time_slots(*),
+                          offer:teaching_offers(*),
+                          teacher:profiles!sessions_teacher_id_fkey(*),
+                          student:profiles!sessions_student_id_fkey(*)
+                        `)
+                        .or(`teacher_id.eq.${user?.id},student_id.eq.${user?.id}`)
+                        .order('created_at', { ascending: false });
+
+                      if (!error && data) {
+                        setSessions(data);
+                      }
+                    };
+                    fetchSessions();
+                  }}
+                />
+              ))}
+              {sessions.length === 0 && (
+                <p className="text-muted-foreground col-span-full text-center py-8">
+                  No sessions found. Browse teaching offers to book a session!
+                </p>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>
