@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 interface SessionCardProps {
   session: {
     id: string;
-    status: string;
+    status: 'scheduled' | 'confirmed' | 'cancelled' | 'completed';
     points_amount: number;
     teacher_id: string;
     student_id: string;
@@ -37,7 +37,7 @@ const SessionCard = ({ session, isTeacher, onStatusUpdate }: SessionCardProps) =
   const [isUpdating, setIsUpdating] = useState(false);
   const { toast } = useToast();
 
-  const updateSessionStatus = async (newStatus: string) => {
+  const updateSessionStatus = async (newStatus: 'scheduled' | 'confirmed' | 'cancelled' | 'completed') => {
     try {
       setIsUpdating(true);
       const { error } = await supabase
