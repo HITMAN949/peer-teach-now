@@ -1,5 +1,5 @@
 
-import { SessionCard } from '@/components/SessionCard';
+import SessionCard from '@/components/SessionCard';
 import { useAuth } from '@/hooks/use-auth';
 
 interface SessionsSectionProps {
