@@ -45,9 +45,9 @@ const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot,
       const totalPoints = Math.round(pointsPerHour * durationHours);
       const platformFee = Math.round(totalPoints * 0.1); // 10% platform fee
       
-      console.log("Creating session with status: pending");
+      console.log("Creating session with status: scheduled");
       
-      // First create the session - use 'pending' which is a common valid status value
+      // First create the session - use 'scheduled' which appears to be a valid status value based on the type
       const { data: sessionData, error: sessionError } = await supabase
         .from('sessions')
         .insert({
@@ -57,12 +57,17 @@ const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot,
           time_slot_id: selectedTimeSlot.id,
           points_amount: totalPoints,
           platform_fee: platformFee,
-          status: 'pending' // Using 'pending' as it's likely a valid status in the database
+          status: 'scheduled' // Using 'scheduled' which is included in our SessionStatus type
         })
         .select()
         .single();
       
-      if (sessionError) throw sessionError;
+      if (sessionError) {
+        console.error("Session creation error:", sessionError);
+        throw sessionError;
+      }
+      
+      console.log("Session created successfully:", sessionData);
       
       // Then update the time slot to mark it as booked
       const { error: timeSlotError } = await supabase
@@ -70,7 +75,10 @@ const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot,
         .update({ is_booked: true })
         .eq('id', selectedTimeSlot.id);
       
-      if (timeSlotError) throw timeSlotError;
+      if (timeSlotError) {
+        console.error("Time slot update error:", timeSlotError);
+        throw timeSlotError;
+      }
       
       toast({
         title: "Session Booked!",
