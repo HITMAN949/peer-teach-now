@@ -7,10 +7,13 @@ import { supabase } from '@/integrations/supabase/client';
 import { Check, X } from 'lucide-react';
 import { format } from 'date-fns';
 
+// Define the allowed status values to match the database constraint
+type SessionStatus = 'scheduled' | 'confirmed' | 'cancelled' | 'completed';
+
 interface SessionCardProps {
   session: {
     id: string;
-    status: 'scheduled' | 'confirmed' | 'cancelled' | 'completed';
+    status: SessionStatus;
     points_amount: number;
     teacher_id: string;
     student_id: string;
@@ -37,7 +40,7 @@ const SessionCard = ({ session, isTeacher, onStatusUpdate }: SessionCardProps) =
   const [isUpdating, setIsUpdating] = useState(false);
   const { toast } = useToast();
 
-  const updateSessionStatus = async (newStatus: 'scheduled' | 'confirmed' | 'cancelled' | 'completed') => {
+  const updateSessionStatus = async (newStatus: SessionStatus) => {
     try {
       setIsUpdating(true);
       const { error } = await supabase
