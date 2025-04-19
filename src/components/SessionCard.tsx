@@ -43,12 +43,19 @@ const SessionCard = ({ session, isTeacher, onStatusUpdate }: SessionCardProps) =
   const updateSessionStatus = async (newStatus: SessionStatus) => {
     try {
       setIsUpdating(true);
+      
+      // Log the status update attempt for debugging
+      console.log(`Attempting to update session ${session.id} to status: ${newStatus}`);
+      
       const { error } = await supabase
         .from('sessions')
         .update({ status: newStatus })
         .eq('id', session.id);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error updating session:', error);
+        throw error;
+      }
 
       toast({
         title: "Session Updated",
