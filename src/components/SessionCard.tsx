@@ -124,7 +124,7 @@ const SessionCard = ({ session, isTeacher, onStatusUpdate }: SessionCardProps) =
           {session.status === 'confirmed' && (
             <Button
               onClick={() => updateSessionStatus('completed')}
-              disabled={isUpdating || session.status === 'completed'}
+              disabled={isUpdating}
               className="w-full"
             >
               Mark as Completed
