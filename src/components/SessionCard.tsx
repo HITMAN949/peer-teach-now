@@ -7,8 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Check, X } from 'lucide-react';
 import { format } from 'date-fns';
 
-// Update the allowed status values to match the database constraint
-// The error indicates that our current values violate the database constraint
+// Define the status values that are allowed by the database constraint
 type SessionStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled' | 'scheduled';
 
 interface SessionCardProps {
@@ -99,6 +98,7 @@ const SessionCard = ({ session, isTeacher, onStatusUpdate }: SessionCardProps) =
             <p className="text-sm font-medium">Status: <span className="capitalize">{session.status}</span></p>
           </div>
 
+          {/* Show confirm/decline buttons only for scheduled sessions and only to teachers */}
           {session.status === 'scheduled' && isTeacher && (
             <div className="flex gap-2">
               <Button
@@ -121,6 +121,7 @@ const SessionCard = ({ session, isTeacher, onStatusUpdate }: SessionCardProps) =
             </div>
           )}
 
+          {/* Show Mark as Completed button only for confirmed sessions */}
           {session.status === 'confirmed' && (
             <Button
               onClick={() => updateSessionStatus('completed')}

@@ -47,7 +47,7 @@ const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot,
       
       console.log("Creating session with status: scheduled");
       
-      // First create the session - use 'scheduled' which appears to be a valid status value based on the type
+      // First create the session - use 'scheduled' which appears to be a valid status value
       const { data: sessionData, error: sessionError } = await supabase
         .from('sessions')
         .insert({
@@ -57,7 +57,7 @@ const OfferBookingCard = ({ offerId, teacherId, pointsPerHour, selectedTimeSlot,
           time_slot_id: selectedTimeSlot.id,
           points_amount: totalPoints,
           platform_fee: platformFee,
-          status: 'scheduled' // Using 'scheduled' which is included in our SessionStatus type
+          status: 'scheduled' as SessionStatus // Explicitly cast to ensure type safety
         })
         .select()
         .single();
